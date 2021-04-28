@@ -26,16 +26,32 @@ config_auth() {
   fi
 }
 
+config_app_path() {
+  printf "\n${CYAN}Enter the full path of the application script or binary: ${NC}"
+  read -s APP_PATH
+  if [[ -z ${APP_PATH} ]]; then
+    return 1
+  else
+    return 0
+  fi
+}
+
 sudo apt-get update
 sudo apt-get install -y jq
 
 until config_auth; do : ; done
 
-curl -O -s -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/andrewmarklloyd/pi-config/main/assets/app.service.tmpl
-curl -O -s -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/andrewmarklloyd/pi-config/main/assets/config-app.sh
-chmod +x config-app.sh
+until config_app_path; do : ; done
 
-# use ~ as a delimiter
+curl -O -s -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/andrewmarklloyd/pi-config/main/assets/app.service.tmpl
+curl -O -s -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/andrewmarklloyd/pi-config/main/assets/start-app.sh
+chmod +x start-app.sh
+
+sed -e "s~{{.APP_PATH}}~${APP_PATH}~" \
+    start-app.sh.tmpl \
+    > start-app.sh
+rm start-app.sh.tmpl
+
 sed -e "s~{{.HEROKU_APP}}~${HEROKU_APP}~" \
     -e "s~{{.HEROKU_API_KEY}}~${HEROKU_API_KEY}~" \
     app.service.tmpl \
