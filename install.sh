@@ -33,6 +33,7 @@ until config_auth; do : ; done
 
 curl -O -s -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/andrewmarklloyd/pi-config/main/assets/app.service.tmpl
 curl -O -s -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/andrewmarklloyd/pi-config/main/assets/config-app.sh
+chmod +x config-app.sh
 
 # use ~ as a delimiter
 sed -e "s~{{.HEROKU_APP}}~${HEROKU_APP}~" \
