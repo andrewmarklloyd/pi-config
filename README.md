@@ -14,4 +14,4 @@ For most of my Raspberry Pi projects I need to configure an app with secret envi
 - Create a script `/home/pi/start-app.sh` containing any arbitrary commands to start your application
 - From a terminal on your Raspberry Pi run the following to run the installation script. Have your API key and Heroku app name ready to enter into the prompt
     
-    ```bash <(curl -O -s -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/andrewmarklloyd/pi-config/main/install.sh)```
+    ```bash <(curl -s -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/andrewmarklloyd/pi-config/main/install.sh)```
