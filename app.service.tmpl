@@ -1,0 +1,16 @@
+[Unit]
+Description=Pi-App
+After=network.target
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+ExecStart=/home/pi/config-app.sh
+WorkingDirectory=/home/pi/
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=pi
+Environment=HEROKU_APP={{.HEROKU_APP}}
+Environment=HEROKU_API_KEY={{.HEROKU_API_KEY}}
