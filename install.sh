@@ -20,7 +20,7 @@ config_auth() {
       printf "\n${RED}Unable to authenticate with Heroku, received error '${tokenCheckError}'${NC}\n\n"
       return 1
     else
-      printf "\n\n${GREEN}Successfully authenticated with Heroku${NC}\n\n"
+      printf "\n\n${GREEN}Successfully authenticated with Heroku${NC}\n"
       return 0
     fi
   fi
@@ -28,7 +28,7 @@ config_auth() {
 
 config_app_path() {
   printf "\n${CYAN}Enter the full path of the application script or binary: ${NC}"
-  read -s APP_PATH
+  read APP_PATH
   if [[ -z ${APP_PATH} ]]; then
     return 1
   else
@@ -44,12 +44,12 @@ until config_auth; do : ; done
 until config_app_path; do : ; done
 
 curl -O -s -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/andrewmarklloyd/pi-config/main/assets/app.service.tmpl
-curl -O -s -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/andrewmarklloyd/pi-config/main/assets/start-app.sh
-chmod +x start-app.sh
+curl -O -s -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/andrewmarklloyd/pi-config/main/assets/start-app.sh.tmpl
 
 sed -e "s~{{.APP_PATH}}~${APP_PATH}~" \
     start-app.sh.tmpl \
     > start-app.sh
+chmod +x start-app.sh
 rm start-app.sh.tmpl
 
 sed -e "s~{{.HEROKU_APP}}~${HEROKU_APP}~" \

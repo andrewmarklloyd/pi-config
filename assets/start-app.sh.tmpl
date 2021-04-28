@@ -20,4 +20,7 @@ for var in ${vars}; do
   export "${var}"
 done
 
+unset HEROKU_API_KEY
+unset HEROKU_APP
+
 {{.APP_PATH}}
