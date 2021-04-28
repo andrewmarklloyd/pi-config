@@ -24,6 +24,9 @@ config_auth() {
   fi
 }
 
+sudo apt-get update
+sudo apt-get install -y jq
+
 until config_auth; do : ; done
 
 curl -O -s -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/andrewmarklloyd/pi-config/main/app.service.tmpl
